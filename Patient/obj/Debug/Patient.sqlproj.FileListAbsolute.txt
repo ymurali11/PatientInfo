@@ -1,0 +1,10 @@
+c:\users\sri lakshmi\source\repos\Patient\Patient\bin\Debug\Patient.dacpac
+c:\users\sri lakshmi\source\repos\Patient\Patient\bin\Debug\Patient.dll
+c:\users\sri lakshmi\source\repos\Patient\Patient\bin\Debug\Patient.pdb
+c:\users\sri lakshmi\source\repos\Patient\Patient\obj\Debug\Patient.dll
+c:\users\sri lakshmi\source\repos\Patient\Patient\obj\Debug\Patient.pdb
+C:\Users\Sri Lakshmi\source\repos\Patient\Patient\obj\Debug\Patient.sqlprojAssemblyReference.cache
+C:\Users\Sri Lakshmi\source\repos\Patient\Patient\obj\Debug\Model.xml
+C:\Users\Sri Lakshmi\source\repos\Patient\Patient\obj\Debug\refactor.xml
+C:\Users\Sri Lakshmi\source\repos\Patient\Patient\obj\Debug\postdeploy.sql
+C:\Users\Sri Lakshmi\source\repos\Patient\Patient\obj\Debug\predeploy.sql

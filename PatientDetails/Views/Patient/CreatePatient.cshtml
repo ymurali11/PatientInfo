@@ -1,0 +1,175 @@
+﻿@model PatientDetails.Models.Patient
+
+
+@{
+    ViewBag.Title = "Patient";
+}
+
+<h2>Patient</h2>
+
+<script type="text/javascript">
+
+</script>
+<fieldset>
+    <div>
+        @using (Html.BeginForm("CreatePatient", "Patient", FormMethod.Post, new { id = "patientDetails" }))
+        {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div style="color:red" ;font-size:12px">
+            <div>@Html.ValidationMessageFor(model => model.FirstName)</div>
+            <div>@Html.ValidationMessageFor(model => model.LastName)</div>
+            <div>@Html.ValidationMessageFor(model => model.DOB)</div>
+        </div>
+
+        <table>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.FirstName, new { id = "lblFirstname" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.FirstName, new { maxLength = 50, minLength = 3 })
+                </td>
+                <td>
+                    @Html.LabelFor(model => model.LastName, new { id = "lblFirstname" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.LastName, new { maxLength = 50, minLength = 2 })
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.Gender, new { id = "lblGender" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Gender, new { maxLength = 6, minLength = 1 })
+                </td>
+                <td>
+                    @Html.LabelFor(model => model.DOB, new { id = "lblDob" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.DOB, new { maxLength = 10 })
+                </td>
+            </tr>
+        </table>
+
+        <div id="ContactInfo">
+            <div style="text-align:right">
+
+                <table id="tblContact">
+                    <thead>
+                        <tr>
+                            <th style="width:100Px"> Work Phone</th>
+                            <th style="width:100Px"> Mobile Phone</th>
+                            <th style="width:100Px"> Home Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td><input type="text" id="txtWork" /></td>
+                            <td><input type="text" id="txtMobile" /></td>
+                            <td><input type="text" id="txtHome" /></td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="3"><input type="button" id="btnAdd" value="Add" /></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                
+            </div>
+
+        </div>
+        <table>
+            <tr>
+                <td colspan="2"></td>
+                <td colspan="2">
+                    <input type="button" name="command" style="" height:"25px"; vertical-allign :"Right" value="Save" id="btnSave" />
+                </td>
+            </tr>
+        </table>
+        }
+
+    </div>
+</fieldset>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+<script type="text/javascript">
+    function GetURL(action,controller) {
+        return '@Url.Action("action","controller")'.replace("action", action).replace("controller", controller);
+    }
+    $("body").on("click", "#btnAdd", function () {
+
+        var txtWork = $("#txtWork");
+        var txtMobile = $("#txtMobile");
+        var txtHome = $("#txtHome");
+
+        //Get the reference of the Table's TBODY element.
+        var tBody = $("#tblContact > TBODY")[0];
+
+        var row = tBody.insertRow(-1);
+
+
+        var cell = $(row.insertCell(-1));
+        cell.html(txtWork.val());
+
+
+        cell = $(row.insertCell(-1));
+        cell.html(txtMobile.val());
+
+        cell = $(row.insertCell(-1));
+        cell.html(txtHome.val());
+        txtHome.val("");
+        txtMobile.val("");
+        txtWork.val("");
+    });
+
+    $("body").on("click", "#btnSave", function () {
+
+        var contactInfo = new Array();
+        $("#tblContact TBODY TR").each(function () {
+            var row = $(this);
+            var data = {};
+            var workPhone= row.find("TD").eq(0).html();
+            var mobilePhone = row.find("TD").eq(1).html();
+            var homePhone = row.find("TD").eq(2).html();
+
+            data = {
+                WorkPhone: workPhone,
+                MobilePhone: mobilePhone,
+                HomePhone:homePhone
+
+            }
+          contactInfo.push(data);
+        });
+        var postData = {
+            "FirstName": $("#FirstName").val(),
+            "LastName": $('#LastName').val,
+            "Gender": $('#Gender').val,
+            "DOB": $('#DOB').val
+        }
+        
+
+        $.ajax({
+
+            url:GetURL("CreatePatient","Patient"),
+            type: "POST",
+            
+            data: {
+                model: JSON.stringify(postData),
+                contactList: JSON.stringify(contactInfo)
+            },
+            traditional:"true",
+            dataType: "json",
+            success: function (r) {
+                alert(" record(s) inserted.");
+            }
+        });
+    });
+    
+</script>
